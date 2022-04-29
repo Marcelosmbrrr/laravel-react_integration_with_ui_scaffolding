@@ -10,7 +10,6 @@ Stack,
 VStack,
 Input,
 FormControl,
-FormErrorMessage,
 Button,
 useColorModeValue,
 Flex,
@@ -21,8 +20,6 @@ import { motion } from 'framer-motion';
 // Fontsawesome icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAddressCard } from '@fortawesome/free-solid-svg-icons';
-// Link from react router
-import { Link as RouterLink } from 'react-router-dom';
 // Png image from assets
 import DefaultImage from "../../assets/images/personal/default.png";
 // Formik and Yup validation
@@ -58,7 +55,19 @@ export function PersonalCard({...props}){
     return(
         <> 
         <Center py={6}>
-            <Box p={2} background={"#222"} rounded={15}>
+            <MotionBox 
+            p={2} 
+            background={"#222"} 
+            rounded={15}
+            initial = {{scale: 0.5}}
+            animate = {{
+                scale: 1
+            }}
+            transition={{
+                duration: 1,
+                type: "tween"
+            }}
+            >
 
                 <Box sx={{mb: 3, display: "flex", justifyContent: "center", color: "#36BCA3"}}>
                     <FontAwesomeIcon icon={faAddressCard} size="2x" />
@@ -138,7 +147,7 @@ export function PersonalCard({...props}){
 
                     </Stack>
                 </Stack>
-            </Box>
+            </MotionBox>
         </Center>
         </>
     );

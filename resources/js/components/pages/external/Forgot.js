@@ -67,8 +67,14 @@ export function Forgot(){
                 p={2} 
                 background={"#222"} 
                 rounded={15}
-                animate={{ x: [-100, 0], opacity: [0, 1] }}
-                transition={{ duration: 1 }}
+                initial = {{scale: 0.8}}
+                animate = {{
+                    scale: 1
+                }}
+                transition={{
+                    duration: 1,
+                    type: "spring"
+                }}
                 >
 
                     <Box mb={3} textAlign={"center"}>
