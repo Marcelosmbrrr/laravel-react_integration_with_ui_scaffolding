@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-// Form Request
-use App\Http\Requests\Auth\RegistrationRequest;
 // Model
 use App\Models\UserModel;
 
@@ -19,7 +17,7 @@ class RegistrationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function registration(Request $request) : \Illuminate\Http\Response
+    public function registration(Request $request) 
     {
 
         try{

@@ -9,6 +9,8 @@ import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 // Formik and Yup validation
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+// Axios
+import Axios from 'axios';
 
 const MotionBox = motion(Box);
 
@@ -38,7 +40,14 @@ export function Register(){
 
     function requestServerOperation(values){
 
-        console.log(values)
+        Axios.post(`/api/registration`, {
+            email: values.email,
+            password: values.password
+          }).then(function (response) {
+            alert("Access Authorized!");
+          }).catch((error) => {
+              alert(error);
+          });
 
     }
 

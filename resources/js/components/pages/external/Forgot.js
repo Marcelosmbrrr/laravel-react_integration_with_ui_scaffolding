@@ -15,6 +15,21 @@ import * as Yup from 'yup';
 
 const MotionBox = motion(Box);
 
+const animation = {
+    closed: {
+        display: "none",
+        opacity: 0
+    },
+    open: {
+        display: "block",
+        opacity: 1,
+        transition: {
+            duration: 2,
+            type: "spring"
+        }
+    }
+}
+
 export function Forgot(){
 
     const [openFormulary, setOpenFormulary] = useState(false);
@@ -49,14 +64,14 @@ export function Forgot(){
 
     function handleSendCodeSubmit(email){
 
-        console.log(email)
+        console.log(window.location)
 
         setOpenFormulary(true);
 
     }
 
     function handleChangePasswordSubmit(values){
-        console.log(values)
+        console.log(window.document.location)
 
     }
 
@@ -97,7 +112,11 @@ export function Forgot(){
 
                         </form>   
 
-                        <Box display={openFormulary ? "block" : "none"} sx={{mt: 5}}>
+                        <MotionBox 
+                        sx={{mt: 5}}
+                        animate = {openFormulary ? "open" : "closed"}
+                        variants = {animation}
+                        >
 
                             <form onSubmit={formik_change_password.handleSubmit}>
 
@@ -125,7 +144,7 @@ export function Forgot(){
 
                             </form>
                             
-                        </Box>
+                        </MotionBox>
 
                         <Flex justify={"space-between"}>
                             <Link to ="/login">Login</Link>

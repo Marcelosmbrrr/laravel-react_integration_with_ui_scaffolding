@@ -1,14 +1,16 @@
+import * as React from 'react';
 // Chakra ui components
 import { Flex } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
-// Link react-router
-import { Link } from 'react-router-dom';
 // Custom components
-import { PersonalCard } from '../../structures/PersonalCard';
+import { CommonUserInterface } from '../../structures/User/CommonUserInterface';
+import { AdminInterface } from '../../structures/Admin/AdminInterface';
 
 const FlexMotion = motion(Flex);
 
 export function Home(){
+
+    const [role, setRole] = React.useState('admin');
 
     return(
         <>
@@ -18,8 +20,8 @@ export function Home(){
             justifyContent={"center"} 
             align={"center"} 
             background={"#19202B"}
-            >   
-                <PersonalCard />
+            >  
+                {role === 'admin' ? AdminInterface() : CommonUserInterface()}
             </FlexMotion>
         </>
     )

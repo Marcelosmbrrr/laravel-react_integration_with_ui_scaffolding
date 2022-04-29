@@ -6,9 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-// Form Request
-use App\Http\Requests\Auth\ChangePasswordWithTokenRequest;
-use App\Http\Requests\Auth\ChangePasswordGetTokenRequest;
 // Model
 use App\Models\UserModel;
 use App\Models\PasswordResetModel;
@@ -16,7 +13,7 @@ use App\Models\PasswordResetModel;
 class ChangePasswordController extends Controller
 {
 
-    function getToken(Request $request) : \Illuminate\Http\Response{
+    function getToken(Request $request) {
 
         $credentials = $request->validate([
             'email' => ['required', 'email']
@@ -29,11 +26,13 @@ class ChangePasswordController extends Controller
             "token" => $random_string
         ]);
 
+        // Send email
+
         return response("Success! Check your email.", 200);
 
     }
 
-    function updatePassword(Request $request, $id) : \Illuminate\Http\Response {
+    function updatePassword(Request $request, $id)  {
 
         try{
 
@@ -47,6 +46,8 @@ class ChangePasswordController extends Controller
             $user->update(["password" => $request->password]);
 
             PasswordResetModel::where("email", $user->email)->delete();
+
+             // Send notification
 
             return response("Success! Your password has been changed.", 200);
 

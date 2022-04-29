@@ -9,6 +9,8 @@ import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 // Formik and Yup validation
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+// Axios
+import Axios from 'axios';
 
 const MotionBox = motion(Box);
 
@@ -33,7 +35,15 @@ export function Login(){
 
     function requestServerOperation(values){
 
-        console.log(values)
+        Axios.post(`/api/do-login`, {
+            email: values.email,
+            password: values.password
+          }).then(function (response) {
+              console.log(response)
+            alert(response.data.message);
+          }).catch((error) => {
+              alert(error);
+          });
 
     }
     
