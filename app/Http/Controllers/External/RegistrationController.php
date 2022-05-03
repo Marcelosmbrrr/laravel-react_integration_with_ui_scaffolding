@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
 // Model
 use App\Models\UserModel;
 // Events
@@ -38,9 +39,9 @@ class RegistrationController extends Controller
 
                 $credentials["password"] = Hash::make($request->password);
         
-                UserModel::create($credentials);
+                $new_user = UserModel::create($credentials);
 
-                event(new UserRegistrationEvent($request->name, $request->email));
+                event(new UserRegistrationEvent($new_user->id, $request->name, $request->email));
 
             });
 
@@ -48,9 +49,7 @@ class RegistrationController extends Controller
             
         }catch(\Exception $e){
 
-            dd($e);
-
-            Log::error($e);
+            Log::error($e->getMessage());
 
             return response("Server Error", 500);
 
@@ -65,24 +64,28 @@ class RegistrationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function confirmRegistration(Request $request, $id) 
+    public function confirmRegistration(Request $request, $crypted_id) 
     {
 
         try{
 
+            $decrypted_id = Crypt::decryptString($crypted_id);
+
             DB::transaction(function() use ($request, $id){
 
-                UserModel::where("id", $id)->update(["email_verified_at" => date('Y-m-d H:i:s')]);
+                UserModel::where("id", $decrypted_id)->update(["email_verified_at" => date('Y-m-d H:i:s')]);
 
                 event(new UserRegistrationConfirmation($request->name, $request->email));
 
             });
      
-            return response("Account verified and activated!", 200);
+            return redirect("/login");
             
         }catch(\Exception $e){
 
-            Log::error($e);
+            Log::error($e->getMessage());
+
+            return response("Server Error", 500);
 
         }
 

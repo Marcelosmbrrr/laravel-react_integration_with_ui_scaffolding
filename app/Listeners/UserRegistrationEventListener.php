@@ -33,6 +33,6 @@ class UserRegistrationEventListener
      */
     public function handle(UserRegistrationEvent $event)
     {
-        Mail::to($event->new_user_email)->send(new UserRegistrationMail($event->new_user_name));
-    }
+        Mail::to($event->new_user_email)->send(new UserRegistrationMail($event->new_user_id, $event->new_user_name));
+    } 
 }

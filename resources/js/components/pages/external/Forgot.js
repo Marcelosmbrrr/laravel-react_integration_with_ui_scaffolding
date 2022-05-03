@@ -1,5 +1,5 @@
 // React native components
-import { useState } from 'react';
+import * as React from 'react';
 // Chakra ui and framer motion
 import { Flex, FormControl, FormLabel, FormErrorMessage, Input, InputGroup, InputRightElement, IconButton, Box, Button } from '@chakra-ui/react';
 import { EmailIcon } from '@chakra-ui/icons';
@@ -12,6 +12,8 @@ import { faKey } from '@fortawesome/free-solid-svg-icons';
 // Formik and Yup validation
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+// Axios
+import Axios from 'axios';
 
 const MotionBox = motion(Box);
 
@@ -32,19 +34,40 @@ const animation = {
 
 export function Forgot(){
 
-    const [openFormulary, setOpenFormulary] = useState(false);
+    const [isLoading, setIsLoading] = React.useState(false);
+    const [openFormulary, setOpenFormulary] = React.useState(false);
 
     const formik_send_code = useFormik({
         initialValues: {
         email: ''
         },
         validationSchema: Yup.object({
-            email: Yup.string().required('Email is required').email("Invalid email")
+            email: Yup.string().required("Email is required").email("Invalid email")
         }),
-        onSubmit: email => {
-            handleSendCodeSubmit(email);
+        onSubmit: value => {
+            handleSendCodeSubmit(value);
         },
     });
+
+    function handleSendCodeSubmit(value){
+
+        Axios.post("/api/do-get-token", {
+            email: value.email
+          }).then(function (response) {
+
+            setOpenFormulary(true);
+
+            alert("Message: " + response.data);
+
+          }).catch((error) => {
+
+            console.log(error);
+
+            alert("Status: " + error.response.status + " | Message: " + error.response.data.message);
+
+          });
+
+    }
 
     const formik_change_password = useFormik({
         initialValues: {
@@ -58,20 +81,38 @@ export function Forgot(){
             confirm_new_password: Yup.string().required('Password must be confirmed').oneOf([Yup.ref('new_password')], 'Your passwords do not match')
         }),
         onSubmit: values => {
-            handleSendCodeSubmit(values);
+            setIsLoading(true);
+            handleChangePasswordSubmit(values);
         },
     });
 
-    function handleSendCodeSubmit(email){
-
-        console.log(window.location)
-
-        setOpenFormulary(true);
-
-    }
-
     function handleChangePasswordSubmit(values){
-        console.log(window.document.location)
+
+        Axios.post(`/api/do-change-password`, {
+            code: values.code,
+            new_password: values.new_password,
+            new_password_confirmation: values.confirm_new_password
+          }).then(function (response) {
+
+            setIsLoading(false);
+
+            alert("Message: " + response.data);
+
+            setTimeout(() => {
+
+                window.location.href = "/login";
+
+            }, 2000);
+
+          }).catch((error) => {
+
+            setIsLoading(false);
+
+            console.log(error);
+
+            alert("Status: " + error.response.status + " | Message: " + error.response.data.message);
+
+          });
 
     }
 
@@ -139,7 +180,8 @@ export function Forgot(){
                                         <FormErrorMessage>{formik_change_password.errors.confirm_new_password}</FormErrorMessage>
                                     </FormControl>
                                 </Flex>
-        
+
+                                {isLoading && <Progress size='md' colorScheme='green' isIndeterminate sx={{borderRadius: "5px", bottom: "2px"}} />}
                                 <Button type = "submit" colorScheme='teal' isFullWidth>Change password</Button>
 
                             </form>

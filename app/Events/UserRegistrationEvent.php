@@ -14,6 +14,7 @@ class UserRegistrationEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $new_user_id;
     public $new_user_name;
     public $new_user_email;
 
@@ -22,8 +23,9 @@ class UserRegistrationEvent
      *
      * @return void
      */
-    public function __construct(string $name, string $email)
+    public function __construct(string $id, string $name, string $email)
     {   
+        $this->new_user_id = $id;
         $this->new_user_name = $name;
         $this->new_user_email = $email;
     }

@@ -15,8 +15,8 @@ Route::view("/{route}", "root")->where(["route" => "^(?!api|home).*$"]);
 
 Route::post("/api/do-login", [LoginController::class, "authenticate"]);
 Route::post("/api/do-registration", [RegistrationController::class, "registration"]);
-Route::patch("/api/do-confirm-registration/{user_id}", [RegistrationController::class, "confirmRegistration"]);
-Route::post("/api/get-token", [ChangePasswordController::class, "getToken"]);
+Route::post("/api/do-confirm-registration/{user_id}", [RegistrationController::class, "confirmRegistration"]);
+Route::post("/api/do-get-token", [ChangePasswordController::class, "getToken"]);
 Route::patch("/api/do-change-password", [ChangePasswordController::class, "updatePassword"]);
 
 // === INTERNAL ROUTES

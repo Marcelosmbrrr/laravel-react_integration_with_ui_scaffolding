@@ -1,6 +1,6 @@
 import * as React from 'react'; 
 // Chakra ui and framer motion
-import { Flex, FormControl, FormLabel, FormErrorMessage, Input, Box, Button, Select } from '@chakra-ui/react';
+import { Flex, FormControl, FormLabel, FormErrorMessage, Input, Box, Button, Select, Progress } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 // Link react-router
 import { Link } from 'react-router-dom';
@@ -25,6 +25,8 @@ const masks_by_country = {
 
 export function Register(){
 
+    const [isLoading, setIsLoading] = React.useState(false);
+
     const formik = useFormik({
         initialValues: {
         name: '',
@@ -45,6 +47,7 @@ export function Register(){
             confirm_password: Yup.string().required('Password must be confirmed').oneOf([Yup.ref('password')], 'Your passwords do not match')
         }),
         onSubmit: values => {
+            setIsLoading(true);
             requestServerOperation(values);
         },
     });
@@ -61,15 +64,19 @@ export function Register(){
             password_confirmation: values.confirm_password // password_confirmation = laravel pattern for validation
           }).then(function (response) {
 
+            setIsLoading(false);
+
             alert("Message: " + response.data + "\r\n" + "Check your e-mail for confirm your registration!");
 
             setTimeout(() => {
 
                 window.location.href = "/login";
 
-            }, 2000)
+            }, 2000);
 
           }).catch((error) => {
+
+            setIsLoading(false);
 
             console.log(error);
 
@@ -81,8 +88,8 @@ export function Register(){
 
     return(
         <>
-
             <Flex width={"100vw"} height={"100vh"} justifyContent={"center"} align={"center"} background={"#19202B"}>
+
                 <MotionBox 
                 p={2} 
                 background={"#222"} 
@@ -163,6 +170,7 @@ export function Register(){
                                 <FormErrorMessage>{formik.errors.confirm_password}</FormErrorMessage>
                             </FormControl>
 
+                            {isLoading && <Progress size='md' colorScheme='green' isIndeterminate sx={{borderRadius: "5px", bottom: "2px"}} />}
                             <Button type = "submit" colorScheme='teal' isFullWidth>Register</Button> 
                         </form>   
 
