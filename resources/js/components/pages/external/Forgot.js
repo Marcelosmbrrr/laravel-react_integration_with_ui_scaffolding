@@ -107,7 +107,7 @@ export function Forgot(){
                                         <IconButton variant='outline' colorScheme='teal' icon={<EmailIcon />} type= "submit" />
                                     </InputRightElement>
                                 </InputGroup> 
-                                <FormErrorMessage>{formik_send_code.errors.email ? formik_send_code.errors.email : null}</FormErrorMessage>
+                                <FormErrorMessage>{formik_send_code.errors.email}</FormErrorMessage>
                             </FormControl>
 
                         </form>   
@@ -124,19 +124,19 @@ export function Forgot(){
                                     <FormControl isInvalid={formik_change_password.errors.code && formik_change_password.touched.code} sx={{mb: 2}}>
                                         <FormLabel htmlFor='code'>Code</FormLabel>
                                         <Input id='code' type='text' onBlur={formik_change_password.handleBlur} onChange={formik_change_password.handleChange} value={formik_change_password.values.code} />
-                                        <FormErrorMessage>{formik_change_password.errors.code ? formik_change_password.errors.code : null}</FormErrorMessage>
+                                        <FormErrorMessage>{formik_change_password.errors.code}</FormErrorMessage>
                                     </FormControl>
 
                                     <FormControl isInvalid={formik_change_password.errors.new_password && formik_change_password.touched.new_password} sx={{mb: 2}}>
                                         <FormLabel htmlFor='new_password'>New Password</FormLabel>
                                         <Input id='new_password' type='password' onBlur={formik_change_password.handleBlur} onChange={formik_change_password.handleChange} value={formik_change_password.values.new_password} />
-                                        <FormErrorMessage>{formik_change_password.errors.new_password ? formik_change_password.errors.new_password : null}</FormErrorMessage>
+                                        <FormErrorMessage>{formik_change_password.errors.new_password}</FormErrorMessage>
                                     </FormControl>
 
                                     <FormControl isInvalid={formik_change_password.errors.confirm_new_password && formik_change_password.touched.confirm_new_password} sx={{mb: 2}}>
                                         <FormLabel htmlFor='confirm_new_password'>Confirm New Password</FormLabel>
                                         <Input id='confirm_new_password' type='password' onBlur={formik_change_password.handleBlur} onChange={formik_change_password.handleChange} value={formik_change_password.values.confirm_new_password} />
-                                        <FormErrorMessage>{formik_change_password.errors.confirm_new_password ? formik_change_password.errors.confirm_new_password : null}</FormErrorMessage>
+                                        <FormErrorMessage>{formik_change_password.errors.confirm_new_password}</FormErrorMessage>
                                     </FormControl>
                                 </Flex>
         

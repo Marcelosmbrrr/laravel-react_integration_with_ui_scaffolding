@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Illuminate\Support\Facades\Auth;
 
 class Authenticate extends Middleware
 {
@@ -23,7 +24,7 @@ class Authenticate extends Middleware
         
             $request->session()->regenerateToken();
         
-            return redirect('/');
+            return redirect('/login');
 
         }
 

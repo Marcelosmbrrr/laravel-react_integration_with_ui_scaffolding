@@ -19,6 +19,7 @@ class AdminSeeder extends Seeder
     {
         UserModel::create([
             "name" => "Admin",
+            "username" => "Admin",
             "email" => env("ADMIN_EMAIL"),
             "is_admin" => true, 
             "phone" => "5332234216",

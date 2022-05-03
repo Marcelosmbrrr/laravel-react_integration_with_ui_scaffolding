@@ -76,13 +76,13 @@ export function Login(){
                             <FormControl mb={2} isInvalid={formik.errors.email && formik.touched.email}>
                                 <FormLabel htmlFor='email'>Email address</FormLabel>
                                 <Input id='email' type='email' placeholder="Enter your email address" onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.email} />
-                                <FormErrorMessage>{formik.errors.email ? formik.errors.email : null}</FormErrorMessage>
+                                <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
                             </FormControl>
                             
                             <FormControl mb={5} isInvalid={formik.errors.password && formik.touched.password}>
                                 <FormLabel htmlFor='password'>Password</FormLabel>
                                 <Input id='password' type='password' placeholder="Enter your password" onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.password} />
-                                <FormErrorMessage>{formik.errors.password ? formik.errors.password : null}</FormErrorMessage>
+                                <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
                             </FormControl>
 
                             <Button type = "submit" colorScheme='teal' isFullWidth>Login</Button>
