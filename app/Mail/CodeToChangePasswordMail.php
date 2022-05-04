@@ -26,7 +26,7 @@ class CodeToChangePasswordMail extends Mailable
         $this->data = [
             "subject" => "LARAV-REACT - Code to change password",
             "title" => "Hello $first_name,",
-            "header_text" => "We have received your password change request at".date("Y-m-d H:i:s"),
+            "header_text" => "We have received your password change request at ".date("Y-m-d H:i:s"),
             "footer_text" => "If you didnt do it, please contact the support.",
             "code" => $code
         ];
@@ -40,6 +40,6 @@ class CodeToChangePasswordMail extends Mailable
      */
     public function build()
     {
-        return $this->subject($this->$data["subject"])->view('emails.send_code_to_change_password')->with($this->data);
+        return $this->subject($this->data["subject"])->view('emails.send_code_to_change_password')->with($this->data);
     }
 }

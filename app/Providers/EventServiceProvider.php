@@ -7,8 +7,12 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 use Illuminate\Support\Facades\Event;
 // Custom Events
 use App\Events\UserRegistrationEvent;
+use App\Events\CodeCreatedEvent;
+use App\Events\UserChangePasswordEvent;
 // Custom listeners
 use App\Listeners\UserRegistrationEventListener;
+use App\Listeners\CodeCreatedEventListener;
+use App\Listeners\UserChangePasswordEventListener;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -20,7 +24,14 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         UserRegistrationEvent::class => [
             UserRegistrationEventListener::class
+        ],
+        CodeCreatedEvent::class => [
+            CodeCreatedEventListener::class
+        ],
+        UserChangePasswordEvent::class => [
+            UserChangePasswordEventListener::class
         ]
+
     ];
 
     /**

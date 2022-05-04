@@ -1,11 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 // Chakra UI
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
-
 // Routes
-import { AppRoutes} from './components/routes/AppRoutes';
+import {AppRoutes} from './components/routes/AppRoutes';
 
 const colors = {
     brand: {

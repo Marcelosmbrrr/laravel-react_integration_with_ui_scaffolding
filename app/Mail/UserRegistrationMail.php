@@ -32,7 +32,7 @@ class UserRegistrationMail extends Mailable
             "title" => "Hello $first_name,",
             "header_text" => "You have created and account in our system! Now its necessary just one more step: confirm your email and activate your account.",
             "footer_text" => "If this email is a mistake, please, just ignore it.",
-            "link" => "http://localhost/api/do-confirm-registration/$crypted_id"
+            "link" => "http://localhost:8000/api/do-confirm-registration?user=$crypted_id"
         ];
     }
 

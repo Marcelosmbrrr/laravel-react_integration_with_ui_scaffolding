@@ -31,8 +31,6 @@ class ChangePasswordConfirmationMail extends Mailable
             "footer_text" => "If you didnt do it, please contact the support."
         ];
 
-        $this->email = $email;
-
     }
 
     /**
@@ -42,6 +40,6 @@ class ChangePasswordConfirmationMail extends Mailable
      */
     public function build()
     {
-        return $this->subject($this->$data["subject"])->view('emails.notify_changed_password')->with($this->data);
+        return $this->subject($this->data["subject"])->view('emails.notify_changed_password')->with($this->data);
     }
 }

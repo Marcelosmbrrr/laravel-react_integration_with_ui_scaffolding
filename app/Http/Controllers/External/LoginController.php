@@ -27,6 +27,8 @@ class LoginController extends Controller
                 'password' => ['required'],
             ]);
 
+            dd($request->all());
+
             // Guard
             // Login as admin and user
     

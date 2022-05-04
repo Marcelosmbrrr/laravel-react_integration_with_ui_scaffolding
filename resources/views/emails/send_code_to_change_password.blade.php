@@ -18,7 +18,7 @@
                 <p style="text-align: justify;"><b>{{ $header_text }}</b></p>
             </div>
             <div class = "section_body">
-                <p>{{ $code }}</p>
+                <p>Code: {{ $code }}</p>
             </div>
             <div class = "section_footer">
                 <p style = "text-align:justify;">{{ $footer_text }}</p>

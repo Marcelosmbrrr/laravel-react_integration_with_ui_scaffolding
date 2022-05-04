@@ -1,7 +1,7 @@
 // React native components
 import * as React from 'react';
 // Chakra ui and framer motion
-import { Flex, FormControl, FormLabel, FormErrorMessage, Input, InputGroup, InputRightElement, IconButton, Box, Button } from '@chakra-ui/react';
+import { Flex, FormControl, FormLabel, FormErrorMessage, Input, InputGroup, InputRightElement, IconButton, Box, Button, Progress } from '@chakra-ui/react';
 import { EmailIcon } from '@chakra-ui/icons';
 import { motion } from 'framer-motion';
 // Link react-router
@@ -34,7 +34,7 @@ const animation = {
 
 export function Forgot(){
 
-    const [isLoading, setIsLoading] = React.useState(false);
+    const [isLoading, setIsLoading] = React.useState({send_code: false, change_password: false});
     const [openFormulary, setOpenFormulary] = React.useState(false);
 
     const formik_send_code = useFormik({
@@ -45,6 +45,7 @@ export function Forgot(){
             email: Yup.string().required("Email is required").email("Invalid email")
         }),
         onSubmit: value => {
+            setIsLoading({send_code: true, change_password: false});
             handleSendCodeSubmit(value);
         },
     });
@@ -55,11 +56,15 @@ export function Forgot(){
             email: value.email
           }).then(function (response) {
 
+            setIsLoading({send_code: false, change_password: false});
+
             setOpenFormulary(true);
 
             alert("Message: " + response.data);
 
           }).catch((error) => {
+
+            setIsLoading({send_code: false, change_password: false});
 
             console.log(error);
 
@@ -81,20 +86,20 @@ export function Forgot(){
             confirm_new_password: Yup.string().required('Password must be confirmed').oneOf([Yup.ref('new_password')], 'Your passwords do not match')
         }),
         onSubmit: values => {
-            setIsLoading(true);
+            setIsLoading({send_code: false, change_password: true});
             handleChangePasswordSubmit(values);
         },
     });
 
     function handleChangePasswordSubmit(values){
 
-        Axios.post(`/api/do-change-password`, {
+        Axios.patch(`/api/do-change-password`, {
             code: values.code,
             new_password: values.new_password,
             new_password_confirmation: values.confirm_new_password
           }).then(function (response) {
 
-            setIsLoading(false);
+            setIsLoading({send_code: false, change_password: false});
 
             alert("Message: " + response.data);
 
@@ -106,7 +111,7 @@ export function Forgot(){
 
           }).catch((error) => {
 
-            setIsLoading(false);
+            setIsLoading({send_code: false, change_password: false});
 
             console.log(error);
 
@@ -150,6 +155,7 @@ export function Forgot(){
                                 </InputGroup> 
                                 <FormErrorMessage>{formik_send_code.errors.email}</FormErrorMessage>
                             </FormControl>
+                            {isLoading.send_code && <Progress size='md' colorScheme='green' isIndeterminate sx={{borderRadius: "5px", top: "5px"}} />}
 
                         </form>   
 
@@ -181,7 +187,7 @@ export function Forgot(){
                                     </FormControl>
                                 </Flex>
 
-                                {isLoading && <Progress size='md' colorScheme='green' isIndeterminate sx={{borderRadius: "5px", bottom: "2px"}} />}
+                                {isLoading.change_password && <Progress size='md' colorScheme='green' isIndeterminate sx={{borderRadius: "5px", bottom: "2px"}} />}
                                 <Button type = "submit" colorScheme='teal' isFullWidth>Change password</Button>
 
                             </form>

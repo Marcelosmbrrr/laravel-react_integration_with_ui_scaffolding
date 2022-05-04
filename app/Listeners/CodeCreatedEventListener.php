@@ -29,7 +29,7 @@ class CodeCreatedEventListener
      * @return void
      */
     public function handle(CodeCreatedEvent $event)
-    {
+    {   
         Mail::to($event->email)->send(new CodeToChangePasswordMail($event->name, $event->code));
     }
 }

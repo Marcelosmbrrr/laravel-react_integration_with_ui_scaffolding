@@ -20,6 +20,7 @@ export function AdminInterface(){
             align={"center"} 
             background={"#19202B"}
             >  
+                
                 <UsersTable />
             </FlexMotion>
         </>
