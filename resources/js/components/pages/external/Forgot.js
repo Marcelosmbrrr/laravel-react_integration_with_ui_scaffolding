@@ -36,6 +36,7 @@ export function Forgot(){
 
     const [isLoading, setIsLoading] = React.useState({send_code: false, change_password: false});
     const [openFormulary, setOpenFormulary] = React.useState(false);
+    const [disabled, setDisabled] = React.useState(false);
 
     const formik_send_code = useFormik({
         initialValues: {
@@ -68,7 +69,7 @@ export function Forgot(){
 
             console.log(error);
 
-            alert("Status: " + error.response.status + " | Message: " + error.response.data.message);
+            alert(error.response.data.message);
 
           });
 
@@ -86,6 +87,7 @@ export function Forgot(){
             confirm_new_password: Yup.string().required('Password must be confirmed').oneOf([Yup.ref('new_password')], 'Your passwords do not match')
         }),
         onSubmit: values => {
+            setDisabled(true);
             setIsLoading({send_code: false, change_password: true});
             handleChangePasswordSubmit(values);
         },
@@ -99,6 +101,8 @@ export function Forgot(){
             new_password_confirmation: values.confirm_new_password
           }).then(function (response) {
 
+            setDisabled(false);
+
             setIsLoading({send_code: false, change_password: false});
 
             alert("Message: " + response.data);
@@ -111,11 +115,13 @@ export function Forgot(){
 
           }).catch((error) => {
 
+            setDisabled(false);
+
             setIsLoading({send_code: false, change_password: false});
 
             console.log(error);
 
-            alert("Status: " + error.response.status + " | Message: " + error.response.data.message);
+            alert(error.response.data.message);
 
           });
 
@@ -188,7 +194,7 @@ export function Forgot(){
                                 </Flex>
 
                                 {isLoading.change_password && <Progress size='md' colorScheme='green' isIndeterminate sx={{borderRadius: "5px", bottom: "2px"}} />}
-                                <Button type = "submit" colorScheme='teal' isFullWidth>Change password</Button>
+                                <Button type = "submit" colorScheme='teal' isFullWidth disabled={disabled}>Change password</Button>
 
                             </form>
                             

@@ -20,14 +20,12 @@ class LoginController extends Controller
     public function authenticate(Request $request)
     {
 
+        $credentials = $request->validate([
+            'email' => ['required', 'email', 'exists:users,email'],
+            'password' => ['required'],
+        ]);
+
         try{
-
-            $credentials = $request->validate([
-                'email' => ['required', 'email'],
-                'password' => ['required'],
-            ]);
-
-            dd($request->all());
 
             // Guard
             // Login as admin and user
@@ -36,17 +34,19 @@ class LoginController extends Controller
 
                 $request->session()->regenerate();
     
-                return redirect("/home");
+                return response(["message" => "Access Authorized!"]);
 
             }else{
 
-                return response("Invalid Credentials!", 404);
+                return response(["message" => "Invalid Credentials!"], 404);
 
             }
  
         }catch(\Exception $e){
 
             Log::error($e);
+
+            return response("", 500);
 
         }
     }

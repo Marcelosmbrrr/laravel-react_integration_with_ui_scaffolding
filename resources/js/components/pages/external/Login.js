@@ -1,5 +1,5 @@
 // Chakra ui and framer motion
-import { Flex, FormControl, FormLabel, FormErrorMessage, Input, Box, Button} from '@chakra-ui/react';
+import { Flex, FormControl, FormLabel, FormErrorMessage, Input, Box, Button,  useColorMode,} from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 // Link react-router
 import { Link } from 'react-router-dom';
@@ -16,6 +16,8 @@ import React from 'react';
 const MotionBox = motion(Box);
 
 export function Login(){
+
+    const { colorMode, toggleColorMode } = useColorMode();
 
     const formik = useFormik({
         initialValues: {
@@ -40,17 +42,24 @@ export function Login(){
             email: values.email,
             password: values.password
           }).then(function (response) {
-              console.log(response)
+
             alert(response.data.message);
+
+            setTimeout(() => {
+                window.location.href = "/home";
+            },[2000])
+
           }).catch((error) => {
-              alert(error);
+
+            alert(error.response.data.message);
+            
           });
 
     }
-    
 
     return(
         <>
+
             <Flex width={"100vw"} height={"100vh"} justifyContent={"center"} align={"center"} background={"#19202B"}>
                 <MotionBox 
                 p={2} 

@@ -4,6 +4,11 @@ namespace App\Http\Controllers\Internal;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+// Models
+use App\Models\UserModel;
+
 
 class UserController extends Controller
 {
@@ -14,7 +19,25 @@ class UserController extends Controller
      */
     public function index()
     {
-        dd("echoooo");
+        try{
+
+            return response([
+                "name" => Auth::user()->name,
+                "username" => Auth::user()->username,
+                "email" => Auth::user()->email,
+                "is_admin" => Auth::user()->is_admin,
+                "phone" => Auth::user()->phone,
+                "photo" => Auth::user()->photo
+            ], 200);
+
+        }catch(\Exception $e){
+
+            Log::error($e->getMessage());
+
+            return response(["message" => $e->getMessage()], 500);
+
+
+        }
     }
 
     /**

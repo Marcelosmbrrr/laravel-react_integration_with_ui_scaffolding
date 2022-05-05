@@ -1,3 +1,8 @@
+// React
+import * as React from 'react';
+// Chakra ui
+import { Modal, useDisclosure, ModalContent, ModalHeader, ModalCloseButton, ModalBody, Text, ModalFooter, Button, ModalOverlay} from "@chakra-ui/react"
+
 export function ModalBackdrop({...props}) {
 
     const OverlayOne = () => (
@@ -33,7 +38,7 @@ export function ModalBackdrop({...props}) {
                 {props.state == "seted" && 
                     <Button onClick={onClose}>Continue</Button>
                 }
-              <Button><a href = "logout">Logout</a></Button>
+              <Button><a href = "/logout">Logout</a></Button>
             </ModalFooter>
           </ModalContent>
         </Modal>

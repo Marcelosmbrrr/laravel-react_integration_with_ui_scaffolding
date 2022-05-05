@@ -25,17 +25,21 @@ import DefaultImage from "../../../assets/images/personal/default.png";
 // Formik and Yup validation
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+// Context
+import { useAuth } from '../../context/Auth';
 
 const MotionBox = motion(Box);
 
 export function PersonalCard({...props}){
 
+    const {auth, setAuth} = useAuth();
+
     const [editProfile, setEditProfile] = React.useState(false);
 
     const formik = useFormik({
         initialValues: {
-        username: '',
-        email: ''
+        username: auth.information.username,
+        email: auth.information.email
         },
         validationSchema: Yup.object({
             username: Yup.string().required("Name is required"),
@@ -86,7 +90,7 @@ export function PersonalCard({...props}){
                         <Image
                             objectFit="cover"
                             boxSize="100%"
-                            src={props.image ? props.image : DefaultImage}
+                            src={auth.information.photo ? auth.information.photo : DefaultImage}
                         />
                     </Flex>
 
@@ -102,10 +106,10 @@ export function PersonalCard({...props}){
                             {!editProfile ? 
                             <div>
                                 <Heading fontSize={'2xl'} fontFamily={'body'} textAlign="center">
-                                    {props.username ? `@${props.username}` : "No username"}
+                                    {`@${auth.information.username}`}
                                 </Heading>
                                 <Text fontWeight={600} color={'gray.500'} size="sm" mb={4} textAlign="center">
-                                    {props.email ? props.email : "No email"}
+                                    {auth.information.email}
                                 </Text>
                             </div>
                             
@@ -141,7 +145,7 @@ export function PersonalCard({...props}){
                             }
                             
                             <Button colorScheme='teal' isFullWidth>Download Profile Data</Button>
-                            <CommonLink href = "/login" sx={{display: "block", width: "100%"}}><Button colorScheme='teal' isFullWidth>Logout</Button></CommonLink>
+                            {auth.information.is_admin && <Button colorScheme='teal' isFullWidth>Admin Section</Button>}
                             
                         </VStack>
 

@@ -11,7 +11,7 @@ use Laravel\Sanctum\HasApiTokens;
 // Factory
 use Database\Factories\UserFactory;
 
-class UserModel extends Model
+class UserModel extends Authenticatable
 {
 
     use HasApiTokens, HasFactory, Notifiable;
@@ -42,6 +42,11 @@ class UserModel extends Model
     protected static function newFactory() : \Illuminate\Database\Eloquent\Factories\Factory
     {
         return UserFactory::new();
+    }
+
+    // For Auth::attempt works
+    function getAuthPassword() {
+        return $this->password;
     }
 
 }

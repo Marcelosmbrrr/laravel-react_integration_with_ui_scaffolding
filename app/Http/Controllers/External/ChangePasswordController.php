@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 // Model
 use App\Models\UserModel;
 use App\Models\PasswordResetModel;
@@ -68,7 +69,7 @@ class ChangePasswordController extends Controller
 
                 $user = UserModel::where("email", $pass_reset->email)->firstOrFail();
 
-                $user->update(["password" => $request->new_password]);
+                $user->update(["password" => Hash::make($request->new_password)]);
 
                 PasswordResetModel::where("email", $user->email)->where("token", $request->code)->delete();
 

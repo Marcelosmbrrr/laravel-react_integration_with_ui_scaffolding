@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Internal;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -13,7 +14,7 @@ class HomeController extends Controller
 
     }
 
-    function logout(){
+    function logout(Request $request){
         
         Auth::logout();
  

@@ -11,19 +11,6 @@ export function AdminInterface(){
 
     alert("Admin Interface");
 
-    return(
-        <>
-            <FlexMotion 
-            width={"100vw"} 
-            height={"100vh"} 
-            justifyContent={"center"} 
-            align={"center"} 
-            background={"#19202B"}
-            >  
-                
-                <UsersTable />
-            </FlexMotion>
-        </>
-    );
+    return UsersTable();
 
 }

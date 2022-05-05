@@ -2,7 +2,7 @@ import * as React from 'react';
 // Axios
 import Axios from 'axios';
 // Chakra ui components
-import { Flex, Progress } from '@chakra-ui/react';
+import { Flex, Progress} from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 // Custom components
 import { Layout } from './Layout';
@@ -22,7 +22,6 @@ export function Home(){
 
         Axios.get("/api/user")
         .then(function (response) {
-            console.log(response)
 
             setAuth({status: "authenticated", information: {
                 name: response.data.name,
