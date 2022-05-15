@@ -80,7 +80,7 @@ export function Register(){
 
             console.log(error);
 
-            alert(error.response.data.message);
+            alert(error.response.data);
 
           });
 

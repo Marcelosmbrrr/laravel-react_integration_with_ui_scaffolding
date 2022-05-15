@@ -27,6 +27,8 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 // Context
 import { useAuth } from '../../context/Auth';
+// Lottie
+import { AddLottie } from '../../../assets/lottie/AddLottie';
 
 const MotionBox = motion(Box);
 
@@ -86,12 +88,13 @@ export function PersonalCard({...props}){
                 boxShadow={'2xl'}
                 padding={1}
                 >
-                    <Flex flex={1} bg="blue.200" rounded={5}>
-                        <Image
+                    <Flex sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}} bg="blue.200" rounded={5}>
+                        {/*<Image
                             objectFit="cover"
                             boxSize="100%"
                             src={auth.information.photo ? auth.information.photo : DefaultImage}
-                        />
+                        />*/}
+                        <AddLottie />
                     </Flex>
 
                     <Stack
