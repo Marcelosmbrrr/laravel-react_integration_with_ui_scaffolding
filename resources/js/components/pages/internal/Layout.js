@@ -69,7 +69,6 @@ export function Layout({...props}) {
                     </Center>
                     <br />
                     <MenuDivider />
-                    <MenuItem>Account Settings</MenuItem>
                     <MenuItem onClick={logout}>Logout</MenuItem>
                   </MenuList>
                 </Menu>

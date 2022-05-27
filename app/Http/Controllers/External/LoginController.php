@@ -34,7 +34,7 @@ class LoginController extends Controller
 
                 $request->session()->regenerate();
     
-                return response(["message" => "Access Authorized!"]);
+                return response(["message" => "Access Authorized!"], 200);
 
             }else{
 
