@@ -2,16 +2,13 @@ import {
   Box,
   Flex,
   Avatar,
-  Link,
   Button,
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
   MenuDivider,
-  useColorModeValue,
   Stack,
-  useColorMode,
   Center,
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
@@ -24,7 +21,6 @@ import { AdminInterface } from '../../structures/Admin/AdminInterface';
 export function Layout({...props}) {
 
   const {auth, setAuth} = useAuth();
-  const { colorMode, toggleColorMode } = useColorMode();
 
   function logout(){
     setAuth(null);
@@ -40,9 +36,6 @@ export function Layout({...props}) {
             <Box><b>LARAV-REACT</b></Box>
             <Flex alignItems={'center'}>
               <Stack direction={'row'} spacing={7}>
-                <Button onClick={toggleColorMode}>
-                  {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
-                </Button> 
                 <Menu>
                   <MenuButton
                     as={Button}

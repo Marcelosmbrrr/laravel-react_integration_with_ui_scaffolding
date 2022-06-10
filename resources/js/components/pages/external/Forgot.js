@@ -32,54 +32,54 @@ const animation = {
     }
 }
 
-export function Forgot(){
+export function Forgot() {
 
-    const [isLoading, setIsLoading] = React.useState({send_code: false, change_password: false});
+    const [isLoading, setIsLoading] = React.useState({ send_code: false, change_password: false });
     const [openFormulary, setOpenFormulary] = React.useState(false);
     const [disabled, setDisabled] = React.useState(false);
 
     const formik_send_code = useFormik({
         initialValues: {
-        email: ''
+            email: ''
         },
         validationSchema: Yup.object({
             email: Yup.string().required("Email is required").email("Invalid email")
         }),
         onSubmit: value => {
-            setIsLoading({send_code: true, change_password: false});
+            setIsLoading({ send_code: true, change_password: false });
             handleSendCodeSubmit(value);
         },
     });
 
-    function handleSendCodeSubmit(value){
+    function handleSendCodeSubmit(value) {
 
         Axios.post("/api/do-get-token", {
             email: value.email
-          }).then(function (response) {
+        }).then(function (response) {
 
-            setIsLoading({send_code: false, change_password: false});
+            setIsLoading({ send_code: false, change_password: false });
 
             setOpenFormulary(true);
 
             alert("Message: " + response.data);
 
-          }).catch((error) => {
+        }).catch((error) => {
 
-            setIsLoading({send_code: false, change_password: false});
+            setIsLoading({ send_code: false, change_password: false });
 
             console.log(error);
 
             alert(error.response.data.message);
 
-          });
+        });
 
     }
 
     const formik_change_password = useFormik({
         initialValues: {
-        code: '',
-        new_password: '',
-        confirm_new_password: ''
+            code: '',
+            new_password: '',
+            confirm_new_password: ''
         },
         validationSchema: Yup.object({
             code: Yup.string().required("Code is required"),
@@ -88,22 +88,22 @@ export function Forgot(){
         }),
         onSubmit: values => {
             setDisabled(true);
-            setIsLoading({send_code: false, change_password: true});
+            setIsLoading({ send_code: false, change_password: true });
             handleChangePasswordSubmit(values);
         },
     });
 
-    function handleChangePasswordSubmit(values){
+    function handleChangePasswordSubmit(values) {
 
         Axios.patch(`/api/do-change-password`, {
             code: values.code,
             new_password: values.new_password,
             new_password_confirmation: values.confirm_new_password
-          }).then(function (response) {
+        }).then(function (response) {
 
             setDisabled(false);
 
-            setIsLoading({send_code: false, change_password: false});
+            setIsLoading({ send_code: false, change_password: false });
 
             alert("Message: " + response.data);
 
@@ -113,98 +113,98 @@ export function Forgot(){
 
             }, 2000);
 
-          }).catch((error) => {
+        }).catch((error) => {
 
             setDisabled(false);
 
-            setIsLoading({send_code: false, change_password: false});
+            setIsLoading({ send_code: false, change_password: false });
 
             console.log(error);
 
             alert(error.response.data.message);
 
-          });
+        });
 
     }
 
-    return(
+    return (
         <>
             <Flex width={"100vw"} height={"100vh"} justifyContent={"center"} align={"center"} background={"#19202B"}>
-                <MotionBox 
-                p={2} 
-                background={"#222"} 
-                rounded={15}
-                initial = {{scale: 0.8}}
-                animate = {{
-                    scale: 1
-                }}
-                transition={{
-                    duration: 1,
-                    type: "spring"
-                }}
+                <MotionBox
+                    p={2}
+                    background={"#222"}
+                    rounded={15}
+                    initial={{ scale: 0.8 }}
+                    animate={{
+                        scale: 1
+                    }}
+                    transition={{
+                        duration: 1,
+                        type: "spring"
+                    }}
                 >
 
                     <Box mb={3} textAlign={"center"}>
                         <FontAwesomeIcon icon={faKey} size="2x" color={"#36BCA3"} />
                     </Box>
 
-                    <Flex direction={"column"} style={{width: 400, mb: 2, background: "#fff"}} p={5} rounded={15}>
-                    
+                    <Flex direction={"column"} style={{ width: 400, mb: 2, background: "#fff" }} p={5} rounded={15}>
+
                         <form onSubmit={formik_send_code.handleSubmit}>
 
                             <FormControl isInvalid={formik_send_code.errors.email && formik_send_code.touched.email}>
                                 <InputGroup size='md'>
-                                    <Input type="text" id='email' placeholder="Enter your email address" onBlur={formik_send_code.handleBlur} onChange={formik_send_code.handleChange} value={formik_send_code.values.email}/>
+                                    <Input type="text" id='email' placeholder="Enter your email address" onBlur={formik_send_code.handleBlur} onChange={formik_send_code.handleChange} value={formik_send_code.values.email} />
                                     <InputRightElement>
-                                        <IconButton variant='outline' colorScheme='teal' icon={<EmailIcon />} type= "submit" />
+                                        <IconButton variant='outline' colorScheme='teal' icon={<EmailIcon />} type="submit" />
                                     </InputRightElement>
-                                </InputGroup> 
+                                </InputGroup>
                                 <FormErrorMessage>{formik_send_code.errors.email}</FormErrorMessage>
                             </FormControl>
-                            {isLoading.send_code && <Progress size='md' colorScheme='green' isIndeterminate sx={{borderRadius: "5px", top: "5px"}} />}
+                            {isLoading.send_code && <Progress size='md' colorScheme='green' isIndeterminate sx={{ borderRadius: "5px", top: "5px" }} />}
 
-                        </form>   
+                        </form>
 
-                        <MotionBox 
-                        sx={{mt: 5}}
-                        animate = {openFormulary ? "open" : "closed"}
-                        variants = {animation}
+                        <MotionBox
+                            sx={{ mt: 5 }}
+                            animate={openFormulary ? "open" : "closed"}
+                            variants={animation}
                         >
 
                             <form onSubmit={formik_change_password.handleSubmit}>
 
                                 <Flex direction={"column"} mb={5}>
-                                    <FormControl isInvalid={formik_change_password.errors.code && formik_change_password.touched.code} sx={{mb: 2}}>
+                                    <FormControl isInvalid={formik_change_password.errors.code && formik_change_password.touched.code} sx={{ mb: 2 }}>
                                         <FormLabel htmlFor='code'>Code</FormLabel>
                                         <Input id='code' type='text' onBlur={formik_change_password.handleBlur} onChange={formik_change_password.handleChange} value={formik_change_password.values.code} />
                                         <FormErrorMessage>{formik_change_password.errors.code}</FormErrorMessage>
                                     </FormControl>
 
-                                    <FormControl isInvalid={formik_change_password.errors.new_password && formik_change_password.touched.new_password} sx={{mb: 2}}>
+                                    <FormControl isInvalid={formik_change_password.errors.new_password && formik_change_password.touched.new_password} sx={{ mb: 2 }}>
                                         <FormLabel htmlFor='new_password'>New Password</FormLabel>
                                         <Input id='new_password' type='password' onBlur={formik_change_password.handleBlur} onChange={formik_change_password.handleChange} value={formik_change_password.values.new_password} />
                                         <FormErrorMessage>{formik_change_password.errors.new_password}</FormErrorMessage>
                                     </FormControl>
 
-                                    <FormControl isInvalid={formik_change_password.errors.confirm_new_password && formik_change_password.touched.confirm_new_password} sx={{mb: 2}}>
+                                    <FormControl isInvalid={formik_change_password.errors.confirm_new_password && formik_change_password.touched.confirm_new_password} sx={{ mb: 2 }}>
                                         <FormLabel htmlFor='confirm_new_password'>Confirm New Password</FormLabel>
                                         <Input id='confirm_new_password' type='password' onBlur={formik_change_password.handleBlur} onChange={formik_change_password.handleChange} value={formik_change_password.values.confirm_new_password} />
                                         <FormErrorMessage>{formik_change_password.errors.confirm_new_password}</FormErrorMessage>
                                     </FormControl>
                                 </Flex>
 
-                                {isLoading.change_password && <Progress size='md' colorScheme='green' isIndeterminate sx={{borderRadius: "5px", bottom: "2px"}} />}
-                                <Button type = "submit" colorScheme='teal' isFullWidth disabled={disabled}>Change password</Button>
+                                {isLoading.change_password && <Progress size='md' colorScheme='green' isIndeterminate sx={{ borderRadius: "5px", bottom: "2px" }} />}
+                                <Button type="submit" colorScheme='teal' isFullWidth disabled={disabled}>Change password</Button>
 
                             </form>
-                            
+
                         </MotionBox>
 
                         <Flex justify={"space-between"}>
-                            <Link to ="/login">Login</Link>
-                        </Flex> 
-                    
-                    </Flex>   
+                            <Link to="/login">Login</Link>
+                        </Flex>
+
+                    </Flex>
                 </MotionBox>
             </Flex>
         </>

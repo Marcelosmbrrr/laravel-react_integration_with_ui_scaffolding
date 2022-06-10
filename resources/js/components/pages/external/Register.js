@@ -1,4 +1,4 @@
-import * as React from 'react'; 
+import * as React from 'react';
 // Chakra ui and framer motion
 import { Flex, FormControl, FormLabel, FormErrorMessage, Input, Box, Button, Select, Progress } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
@@ -23,19 +23,19 @@ const masks_by_country = {
     us: "1(***)***-****"
 }
 
-export function Register(){
+export function Register() {
 
     const [isLoading, setIsLoading] = React.useState(false);
 
     const formik = useFormik({
         initialValues: {
-        name: '',
-        username: '',
-        email: '',
-        phone: '',
-        country: 'none',
-        password: '',
-        confirm_password: ''
+            name: '',
+            username: '',
+            email: '',
+            phone: '',
+            country: 'none',
+            password: '',
+            confirm_password: ''
         },
         validationSchema: Yup.object({
             name: Yup.string().required("Name is required"),
@@ -52,7 +52,7 @@ export function Register(){
         },
     });
 
-    function requestServerOperation(values){
+    function requestServerOperation(values) {
 
         Axios.post(`/api/do-registration`, {
             name: values.name,
@@ -62,7 +62,7 @@ export function Register(){
             phone: values.phone.replace("(", "").replace(")", "").replace("-", ""),
             password: values.password,
             password_confirmation: values.confirm_password // password_confirmation = laravel pattern for validation
-          }).then(function (response) {
+        }).then(function (response) {
 
             setIsLoading(false);
 
@@ -74,7 +74,7 @@ export function Register(){
 
             }, 2000);
 
-          }).catch((error) => {
+        }).catch((error) => {
 
             setIsLoading(false);
 
@@ -82,26 +82,26 @@ export function Register(){
 
             alert(error.response.data);
 
-          });
+        });
 
     }
 
-    return(
+    return (
         <>
             <Flex width={"100vw"} height={"100vh"} justifyContent={"center"} align={"center"} background={"#19202B"}>
 
-                <MotionBox 
-                p={2} 
-                background={"#222"} 
-                rounded={15}
-                initial = {{scale: 0.8}}
-                animate = {{
-                    scale: 1
-                }}
-                transition={{
-                    duration: 1,
-                    type: "spring"
-                }}
+                <MotionBox
+                    p={2}
+                    background={"#222"}
+                    rounded={15}
+                    initial={{ scale: 0.8 }}
+                    animate={{
+                        scale: 1
+                    }}
+                    transition={{
+                        duration: 1,
+                        type: "spring"
+                    }}
                 >
 
                     <Box mb={3} textAlign={"center"}>
@@ -109,77 +109,77 @@ export function Register(){
                     </Box>
 
                     <Flex direction={"column"} background={"#fff"} p={5} rounded={15}>
-                    
-                        <form onSubmit={formik.handleSubmit} style={{width: 400}}>
+
+                        <form onSubmit={formik.handleSubmit} style={{ width: 400 }}>
                             <Flex>
-                                <FormControl sx={{mb: 2, mr: 3}} isInvalid={formik.errors.name && formik.touched.name}>
+                                <FormControl sx={{ mb: 2, mr: 3 }} isInvalid={formik.errors.name && formik.touched.name}>
                                     <FormLabel htmlFor='name'>Name</FormLabel>
                                     <Input id='name' type='text' onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.name} />
                                     <FormErrorMessage>{formik.errors.name}</FormErrorMessage>
                                 </FormControl>
 
-                                <FormControl sx={{mb: 2}} isInvalid={formik.errors.username && formik.touched.username}>
+                                <FormControl sx={{ mb: 2 }} isInvalid={formik.errors.username && formik.touched.username}>
                                     <FormLabel htmlFor='username'>Username</FormLabel>
                                     <Input id='username' type='text' onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.username} />
                                     <FormErrorMessage>{formik.errors.username}</FormErrorMessage>
                                 </FormControl>
                             </Flex>
 
-                            <FormControl sx={{mb: 2}} isInvalid={formik.errors.email && formik.touched.email}>
+                            <FormControl sx={{ mb: 2 }} isInvalid={formik.errors.email && formik.touched.email}>
                                 <FormLabel htmlFor='email'>Email address</FormLabel>
                                 <Input id='email' type='email' onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.email} />
                                 <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
                             </FormControl>
 
-                            <FormControl sx={{mb: 2}} isInvalid={formik.errors.country && formik.touched.country}>
+                            <FormControl sx={{ mb: 2 }} isInvalid={formik.errors.country && formik.touched.country}>
                                 <FormLabel htmlFor='country'>Country</FormLabel>
-                                <Select id = "country" onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.country}>
-                                    <option value = 'none' disabled>Select Option</option>
+                                <Select id="country" onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.country}>
+                                    <option value='none' disabled>Select Option</option>
                                     <option value='brazil'>Brazil</option>
                                     <option value='us'>United States</option>
                                 </Select>
                                 <FormErrorMessage>{formik.errors.country}</FormErrorMessage>
                             </FormControl>
 
-                            <FormControl sx={{mb: 2}} isInvalid={formik.errors.phone && formik.touched.phone}>
-                                <FormLabel htmlFor='phone'>Phone Number</FormLabel>  
-                                <Input 
-                                id='phone' 
-                                type='tel' 
-                                onBlur={formik.handleBlur} 
-                                onChange={formik.handleChange} 
-                                value={formik.values.phone} 
-                                as={InputMask} 
-                                mask={masks_by_country[formik.values.country]}
-                                maskChar={null} 
-                                disabled={formik.values.country == 'none'} 
-                                placeholder={formik.values.country == 'none' ? 'Select a country before' : ''}
-                                /> 
+                            <FormControl sx={{ mb: 2 }} isInvalid={formik.errors.phone && formik.touched.phone}>
+                                <FormLabel htmlFor='phone'>Phone Number</FormLabel>
+                                <Input
+                                    id='phone'
+                                    type='tel'
+                                    onBlur={formik.handleBlur}
+                                    onChange={formik.handleChange}
+                                    value={formik.values.phone}
+                                    as={InputMask}
+                                    mask={masks_by_country[formik.values.country]}
+                                    maskChar={null}
+                                    disabled={formik.values.country == 'none'}
+                                    placeholder={formik.values.country == 'none' ? 'Select a country before' : ''}
+                                />
                                 <FormErrorMessage>{formik.errors.phone}</FormErrorMessage>
                             </FormControl>
 
-                            <FormControl sx={{mb: 2}} isInvalid={formik.errors.password && formik.touched.password}>
+                            <FormControl sx={{ mb: 2 }} isInvalid={formik.errors.password && formik.touched.password}>
                                 <FormLabel htmlFor='password'>Password</FormLabel>
                                 <Input id='password' type='password' onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.password} />
                                 <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
                             </FormControl>
 
-                            <FormControl sx={{mb: 5}} isInvalid={formik.errors.confirm_password && formik.touched.confirm_password}>
+                            <FormControl sx={{ mb: 5 }} isInvalid={formik.errors.confirm_password && formik.touched.confirm_password}>
                                 <FormLabel htmlFor='confirm_password'>Confirm Password</FormLabel>
                                 <Input id='confirm_password' type='password' onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.confirm_password} />
                                 <FormErrorMessage>{formik.errors.confirm_password}</FormErrorMessage>
                             </FormControl>
 
-                            {isLoading && <Progress size='md' colorScheme='green' isIndeterminate sx={{borderRadius: "5px", bottom: "2px"}} />}
-                            <Button type = "submit" colorScheme='teal' isFullWidth>Register</Button> 
-                        </form>   
+                            {isLoading && <Progress size='md' colorScheme='green' isIndeterminate sx={{ borderRadius: "5px", bottom: "2px" }} />}
+                            <Button type="submit" colorScheme='teal' isFullWidth>Register</Button>
+                        </form>
 
                         <Flex justify={"space-between"}>
-                            <Link to ="/login">Login</Link>
-                            <Link to ="/forgot-password">Forgot my password</Link>
-                        </Flex> 
-                    
-                    </Flex>   
+                            <Link to="/login">Login</Link>
+                            <Link to="/forgot-password">Forgot my password</Link>
+                        </Flex>
+
+                    </Flex>
                 </MotionBox>
             </Flex>
         </>
